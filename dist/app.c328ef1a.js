@@ -161,10 +161,15 @@ var createElement = function createElement(tag, classes, content) {
   return node;
 };
 
+var noop = function noop() {};
+
 function upload(selector) {
+  var _options$onUpload;
+
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   // список файлов
   var files = [];
+  var onUpload = (_options$onUpload = options.onUpload) !== null && _options$onUpload !== void 0 ? _options$onUpload : noop;
   var fileInput = document.querySelector(selector);
   var openBtn = createElement('button', ['btn'], 'Открыть');
   var uploadBtn = createElement('button', ['btn', 'primary'], 'Загрузить');
@@ -225,7 +230,17 @@ function upload(selector) {
     }
   };
 
-  var uploadHandler = function uploadHandler() {};
+  var uploadHandler = function uploadHandler() {
+    preview.querySelectorAll('.preview-remove').forEach(function (e) {
+      return e.remove();
+    });
+    var previewInfo = preview.querySelectorAll('.preview-info');
+    previewInfo.forEach(function (e) {
+      e.style.bottom = 0;
+      e.innerHTML = "<div class=\"preview-progress\"></div>";
+    });
+    onUpload(files);
+  };
 
   openBtn.addEventListener('click', triggerFileInput);
   fileInput.addEventListener('change', changeHandler);
@@ -239,7 +254,10 @@ var _upload = require("./upload");
 
 (0, _upload.upload)('#file', {
   multiple: true,
-  accept: ['.png', '.jpg', '.jpeg', '.gif']
+  accept: ['.png', '.jpg', '.jpeg', '.gif'],
+  onUpload: function onUpload(files) {
+    console.log('files', files);
+  }
 });
 },{"./upload":"upload.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];

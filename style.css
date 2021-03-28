@@ -119,3 +119,15 @@ img {
     width: 180px;
     height: auto;
 }
+
+.preview-progress {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    text-align: center;
+    background-color: #42b983;
+    transition: width 0.3s;
+    width: 33%;
+}

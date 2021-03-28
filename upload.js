@@ -27,9 +27,13 @@ const createElement = (tag, classes, content) => {
   return node
 }
 
+const noop = () => {}
+
 export function upload (selector, options = {}) {
   // список файлов
   let files = []
+
+  const onUpload = options.onUpload ?? noop
 
   const fileInput = document.querySelector(selector)
   const openBtn = createElement('button', ['btn'], 'Открыть')
@@ -112,7 +116,16 @@ export function upload (selector, options = {}) {
     }
   }
 
-  const uploadHandler = () => {}
+  const uploadHandler = () => {
+    preview.querySelectorAll('.preview-remove').forEach(e => e.remove())
+    const previewInfo = preview.querySelectorAll('.preview-info')
+    previewInfo.forEach(e => {
+      e.style.bottom = 0
+      e.innerHTML = `<div class="preview-progress"></div>`
+    })
+
+    onUpload(files)
+  }
 
   openBtn.addEventListener('click', triggerFileInput)
   fileInput.addEventListener('change', changeHandler)
