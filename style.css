@@ -130,4 +130,7 @@ img {
     background-color: #42b983;
     transition: width 0.3s;
     width: 33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

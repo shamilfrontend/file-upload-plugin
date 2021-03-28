@@ -124,7 +124,7 @@ export function upload (selector, options = {}) {
       e.innerHTML = `<div class="preview-progress"></div>`
     })
 
-    onUpload(files)
+    onUpload(files, previewInfo)
   }
 
   openBtn.addEventListener('click', triggerFileInput)
